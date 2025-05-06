@@ -7,14 +7,30 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "babdev/pagerfanta-bundle": "^4.5",
+        "doctrine/dbal": "^3.9.4",
+        "doctrine/doctrine-bundle": "^2.14",
+        "doctrine/doctrine-migrations-bundle": "^3.4.1",
+        "doctrine/orm": "^3.3.2",
+        "pagerfanta/doctrine-orm-adapter": "^4.7",
+        "pagerfanta/twig": "^4.7",
+        "spatie/color": "^1.8",
+        "symfony/asset-mapper": "7.2.*",
         "symfony/console": "7.2.*",
         "symfony/dotenv": "7.2.*",
-        "symfony/flex": "^2",
+        "symfony/flex": "^2.5",
+        "symfony/form": "7.2.*",
         "symfony/framework-bundle": "7.2.*",
         "symfony/runtime": "7.2.*",
-        "symfony/yaml": "7.2.*"
-    },
-    "require-dev": {
+        "symfony/security-bundle": "7.2.*",
+        "symfony/stimulus-bundle": "^2.24",
+        "symfony/twig-bundle": "7.2.*",
+        "symfony/ux-chartjs": "^2.24",
+        "symfony/ux-swup": "^2.24",
+        "symfony/validator": "7.2.*",
+        "symfony/yaml": "7.2.*",
+        "twig/extra-bundle": "^2.12|^3.20",
+        "twig/twig": "^2.12|^3.20"
     },
     "config": {
         "allow-plugins": {
@@ -48,13 +64,17 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "pre-commit": [
+            "php-cs-fixer fix src"
         ]
     },
     "conflict": {
@@ -65,5 +85,13 @@
             "allow-contrib": false,
             "require": "7.2.*"
         }
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^4.1",
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "roave/security-advisories": "dev-latest",
+        "symfony/maker-bundle": "^1.62.1",
+        "symfony/stopwatch": "7.2.*",
+        "symfony/web-profiler-bundle": "7.2.*"
     }
 }
