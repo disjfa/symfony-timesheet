@@ -8,12 +8,13 @@
     {% block stylesheets %}
     {% endblock %}
 
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
     {% block javascripts %}
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
 <body>
-{{  include('app/_navbar.html.twig') }}
+{{ include('app/_navbar.html.twig') }}
 <div class="container">
     {% block body %}{% endblock %}
 </div>

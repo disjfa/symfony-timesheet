@@ -36,25 +36,25 @@ return [
         'version' => '4.4.9',
     ],
     '@swup/fade-theme' => [
-        'version' => '2.0.1',
+        'version' => '1.0.5',
     ],
     '@swup/slide-theme' => [
-        'version' => '2.0.1',
+        'version' => '1.0.5',
     ],
     '@swup/forms-plugin' => [
-        'version' => '3.6.0',
+        'version' => '2.0.1',
     ],
     '@swup/plugin' => [
-        'version' => '4.0.0',
+        'version' => '2.0.2',
     ],
     'swup' => [
-        'version' => '4.8.2',
+        'version' => '3.1.1',
     ],
     'delegate-it' => [
-        'version' => '6.2.1',
+        'version' => '6.0.1',
     ],
     '@swup/debug-plugin' => [
-        'version' => '4.1.0',
+        'version' => '3.0.0',
     ],
     '@fortawesome/fontawesome-free' => [
         'version' => '6.7.2',
@@ -75,5 +75,11 @@ return [
     '@fortawesome/fontawesome-free/css/all.min.css' => [
         'version' => '6.7.2',
         'type' => 'css',
+    ],
+    'fullcalendar/index.global.min.js' => [
+        'version' => '6.1.17',
+    ],
+    'fullcalendar/index.global.js' => [
+        'version' => '6.1.17',
     ],
 ];

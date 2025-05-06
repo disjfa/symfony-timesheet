@@ -8,7 +8,7 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Extension\RuntimeExtensionInterface;
 
-class EstimateProgressbarExtensionRuntime implements RuntimeExtensionInterface
+class DatesExtensionRuntime implements RuntimeExtensionInterface
 {
     public function __construct(private readonly Environment $twig)
     {
@@ -70,5 +70,12 @@ class EstimateProgressbarExtensionRuntime implements RuntimeExtensionInterface
         ];
 
         return $bars;
+    }
+
+    public function asHours(int $seconds)
+    {
+        $hours = floor($seconds / 3600) + ($seconds % 3600 / 900 * .15);
+
+        return number_format($hours, 2, ',');
     }
 }

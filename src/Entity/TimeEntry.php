@@ -118,4 +118,12 @@ class TimeEntry
     {
         $this->subtask = $subtask;
     }
+
+    public function getEndDate(): \DateTimeInterface
+    {
+        $endDate = clone $this->start_date;
+        $endDate->modify(sprintf('+%d seconds', $this->seconds));
+
+        return $endDate;
+    }
 }
