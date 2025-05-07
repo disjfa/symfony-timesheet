@@ -26,6 +26,7 @@
         "symfony/security-bundle": "7.2.*",
         "symfony/stimulus-bundle": "^2.24",
         "symfony/twig-bundle": "7.2.*",
+        "symfony/ux-autocomplete": "^2.24",
         "symfony/ux-chartjs": "^2.24",
         "symfony/ux-swup": "^2.24",
         "symfony/validator": "7.2.*",

@@ -4,8 +4,35 @@
 
 {% block body %}
     <div class="controller">
-        <div style="height: 60vh;">
-            {{ render_chart(chart) }}
+        <div class="row">
+            <div class="col-12">
+                {{ form_start(filterForm) }}
+                <div class="d-flex justify-content-between gap-3">
+                    {{ form_widget(filterForm) }}
+                    <div class="mb-3">
+                        <br>
+                        <button class="btn btn-outline-primary">
+                            {{ button_label|default('Filter') }}
+                        </button>
+                    </div>
+                </div>
+                {{ form_end(filterForm) }}
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-lg-8">
+                <h3>Projects</h3>
+                <div style="height: 60vh;">
+                    {{ render_chart(projects) }}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <h3>Organizations</h3>
+                <div style="height: 60vh;">
+                    {{ render_chart(organizations) }}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

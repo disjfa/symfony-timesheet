@@ -20,30 +20,51 @@ class TimeEntryFixtures extends Fixture implements DependentFixtureInterface
         $users = $manager->getRepository(User::class)->findAll();
         $subtasks = $manager->getRepository(Subtask::class)->findAll();
 
-        for ($i = 1; $i <= 1337; ++$i) {
+        foreach ($users as $user) {
+            $day_free = random_int(0, 4);
+
             $dateTime = new \DateTime();
+            $dateTime->modify('this monday');
+            $dateTime->modify('-6 weeks');
+            $dateTime->setTime(9, 0, 0);
 
-            $dateTime->modify('next sunday');
-            $dateTime->setTime(8, 0, 0);
-            $dateTime->modify('-'.random_int(1, 12).' week');
-            $dateTime->modify('+'.random_int(1, 5).' day');
-            $dateTime->modify('+'.random_int(1, 8).' hour');
+            for ($week = 0; $week < 6; ++$week) {
+                for ($day = 0; $day < 5; ++$day) {
+                    if ($day_free !== $day) {
+                        $remainingSeconds = 28800; // 8 hours in seconds
+                        $currentTime = clone $dateTime;
 
-            shuffle($users);
-            shuffle($subtasks);
-            /** @var Subtask $subtask */
-            $subtask = current($subtasks);
-            $task = $subtask->getTask();
-            $project = $task->getProject();
+                        while ($remainingSeconds > 0) {
+                            shuffle($subtasks);
+                            /** @var Subtask $subtask */
+                            $subtask = current($subtasks);
+                            $task = $subtask->getTask();
+                            $project = $task->getProject();
 
-            $timeEntry = new TimeEntry();
-            $timeEntry->setStartDate($dateTime);
-            $timeEntry->setSeconds(random_int(1, 18) * 15 * 60);
-            $timeEntry->setProject($project);
-            $timeEntry->setTask($task);
-            $timeEntry->setSubtask($subtask);
-            $timeEntry->setUser(current($users));
-            $manager->persist($timeEntry);
+                            $maxDuration = min($remainingSeconds, 4 * 60 * 60); // Max 4 hours per entry
+                            $minDuration = 15 * 60; // 15 minutes in seconds
+                            $fifteenMinutes = 15 * 60; // 15 minutes in seconds
+                            $maxDurationLimit = 4 * 60 * 60; // 4 hours in seconds
+                            $randomDuration = random_int($minDuration, min($maxDurationLimit, $maxDuration));
+                            $duration = round($randomDuration / $fifteenMinutes) * $fifteenMinutes;
+
+                            $timeEntry = new TimeEntry();
+                            $timeEntry->setStartDate($currentTime);
+                            $timeEntry->setSeconds($duration);
+                            $timeEntry->setProject($project);
+                            $timeEntry->setTask($task);
+                            $timeEntry->setSubtask($subtask);
+                            $timeEntry->setUser($user);
+                            $manager->persist($timeEntry);
+
+                            $remainingSeconds -= $duration;
+                            $currentTime = (clone $currentTime)->modify("+{$duration} seconds");
+                        }
+                    }
+                    $dateTime->modify('+1 day');
+                }
+                $dateTime->modify('+2 days'); // Skip to next Monday
+            }
         }
 
         $manager->flush();

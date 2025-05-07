@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\TimeEntry;
+use App\Query\TimeEntryQuery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +17,24 @@ class TimeEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, TimeEntry::class);
     }
 
-    //    /**
-    //     * @return TimeEntry[] Returns an array of TimeEntry objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return TimeEntry[]
+     */
+    public function findWithQuery(TimeEntryQuery $timeEntryQuery): array
+    {
+        $qb = $this->createQueryBuilder('time_entry');
+        $qb->where('time_entry.start_date >= :start_date');
+        $qb->andWhere('time_entry.start_date <= :end_date');
+        $qb->setParameter('start_date', $timeEntryQuery->getStartDate());
+        $qb->setParameter('end_date', $timeEntryQuery->getEndDate());
 
-    //    public function findOneBySomeField($value): ?TimeEntry
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $organizationId = $timeEntryQuery->getOrganizationId();
+        if ($organizationId) {
+            $qb->join('time_entry.project', 'project');
+            $qb->andWhere('project.organization = :organization');
+            $qb->setParameter('organization', $organizationId);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

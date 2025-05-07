@@ -8,7 +8,7 @@ use Spatie\Color\Names;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
-class OrganizationsPastWeek
+class ProjectsPastWeek
 {
     use Names;
 
@@ -23,12 +23,12 @@ class OrganizationsPastWeek
 
     public function getChart(): Chart
     {
-        $organizations = $this->timeSheetManager->getOrganizations();
+        $projects = $this->timeSheetManager->getProjects();
 
         $labels = [];
         $data = [];
         $backgroundColors = [];
-        foreach ($organizations as $item) {
+        foreach ($projects as $item) {
             $color = Named::fromString($item['color']);
 
             $backgroundColors[] = (string) $color->toRgb();
@@ -36,7 +36,7 @@ class OrganizationsPastWeek
             $data[] = $item['seconds'] / 60 / 60;
         }
 
-        $chart = $this->chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        $chart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
             'labels' => $labels,
             'datasets' => [

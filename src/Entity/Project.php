@@ -20,6 +20,9 @@ class Project
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $color = null;
+
     #[ORM\OneToMany(targetEntity: TimeEntry::class, mappedBy: 'project')]
     public Collection $timeEntries;
 
@@ -74,6 +77,18 @@ class Project
     public function setTasks(Collection $tasks): void
     {
         $this->tasks = $tasks;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
     }
 
     public function getTotalEstimate(): int

@@ -14,11 +14,12 @@ export default class extends Controller {
 
   connect() {
     const calendar = new FullCalendar.Calendar(this.calendarTarget, {
-      initialView: 'dayGridMonth',
+      initialView: 'timeGridWeek',
       events: 'api/calendar',
       slotMinTime: '08:00:00',
+      slotMaxTime: '18:00:00',
       headerToolbar: {
-        left: 'prev,next',
+        left: 'prev,today,next',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,dayGridDay' // user can switch between the two
       }

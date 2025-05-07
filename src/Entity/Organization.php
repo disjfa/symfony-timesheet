@@ -20,6 +20,9 @@ class Organization
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $color = null;
+
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'organization')]
     public Collection $projects;
 
@@ -41,6 +44,18 @@ class Organization
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): static
+    {
+        $this->color = $color;
 
         return $this;
     }

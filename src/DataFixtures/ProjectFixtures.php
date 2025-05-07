@@ -7,9 +7,12 @@ use App\Entity\Project;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Spatie\Color\Names;
 
 class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
+    use Names;
+
     private array $projects = [
         '24-Hour Coffee Marathon',
         'World’s Strongest Espresso Challenge',
@@ -65,16 +68,20 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
+        $colorNames = array_keys($this->names);
+
         shuffle($this->projects);
 
         $organizations = $manager->getRepository(Organization::class)->findAll();
 
         foreach ($this->projects as $projectName) {
+            shuffle($colorNames);
             shuffle($organizations);
 
             $project = new Project();
             $project->setName($projectName);
             $project->setOrganization(current($organizations));
+            $project->setColor(current($colorNames));
             $manager->persist($project);
         }
 

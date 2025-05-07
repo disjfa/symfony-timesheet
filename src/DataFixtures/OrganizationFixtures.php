@@ -5,9 +5,12 @@ namespace App\DataFixtures;
 use App\Entity\Organization;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Spatie\Color\Names;
 
 class OrganizationFixtures extends Fixture
 {
+    use Names;
+
     private array $organizations = [
         'The League of Overcaffeinated Thinkers',
         'Quantum Squirrel Innovations',
@@ -23,9 +26,14 @@ class OrganizationFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $colorNames = array_keys($this->names);
+
         foreach ($this->organizations as $organizationName) {
+            shuffle($colorNames);
+
             $organization = new Organization();
             $organization->setName($organizationName);
+            $organization->setColor(current($colorNames));
             $manager->persist($organization);
         }
 
