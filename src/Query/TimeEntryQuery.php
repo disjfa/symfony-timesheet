@@ -3,11 +3,15 @@
 namespace App\Query;
 
 use App\Entity\Organization;
+use App\Entity\Project;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 
 class TimeEntryQuery
 {
     private ?int $organizationId = null;
+    private ?int $projectId = null;
+    private ?int $userId = null;
     private ?\DateTime $startDate = null;
     private ?\DateTime $endDate = null;
 
@@ -24,6 +28,16 @@ class TimeEntryQuery
         if ($organizationId) {
             $this->organizationId = $organizationId;
         }
+
+        $userId = filter_var($request->query->get('user'), FILTER_VALIDATE_INT);
+        if ($userId) {
+            $this->userId = $userId;
+        }
+
+        $projectId = filter_var($request->query->get('project'), FILTER_VALIDATE_INT);
+        if ($projectId) {
+            $this->projectId = $projectId;
+        }
     }
 
     public function setOrganization(Organization $organization)
@@ -34,6 +48,26 @@ class TimeEntryQuery
     public function getOrganizationId(): ?int
     {
         return $this->organizationId;
+    }
+
+    public function getProjectId(): ?int
+    {
+        return $this->projectId;
+    }
+
+    public function setProject(Project $project): void
+    {
+        $this->projectId = $project->getId();
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->userId = $user->getId();
     }
 
     public function getStartDate(): ?\DateTime

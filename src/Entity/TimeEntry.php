@@ -33,10 +33,10 @@ class TimeEntry
     public Project $project;
 
     #[ORM\ManyToOne(targetEntity: Task::class, inversedBy: 'time_entries')]
-    public Task $task;
+    public ?Task $task;
 
     #[ORM\ManyToOne(targetEntity: Subtask::class, inversedBy: 'time_entries')]
-    public Subtask $subtask;
+    public ?Subtask $subtask;
 
     public function getId(): ?int
     {
@@ -99,7 +99,7 @@ class TimeEntry
         $this->project = $project;
     }
 
-    public function getTask(): Task
+    public function getTask(): ?Task
     {
         return $this->task;
     }
@@ -109,7 +109,7 @@ class TimeEntry
         $this->task = $task;
     }
 
-    public function getSubtask(): Subtask
+    public function getSubtask(): ?Subtask
     {
         return $this->subtask;
     }

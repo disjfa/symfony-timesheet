@@ -10,10 +10,10 @@
         "babdev/pagerfanta-bundle": "^4.5",
         "doctrine/dbal": "^3.9.4",
         "doctrine/doctrine-bundle": "^2.14",
-        "doctrine/doctrine-migrations-bundle": "^3.4.1",
-        "doctrine/orm": "^3.3.2",
-        "pagerfanta/doctrine-orm-adapter": "^4.7",
-        "pagerfanta/twig": "^4.7",
+        "doctrine/doctrine-migrations-bundle": "^3.4.2",
+        "doctrine/orm": "^3.3.3",
+        "pagerfanta/doctrine-orm-adapter": "^4.7.1",
+        "pagerfanta/twig": "^4.7.1",
         "spatie/color": "^1.8",
         "symfony/asset": "7.2.*",
         "symfony/asset-mapper": "7.2.*",
@@ -31,8 +31,8 @@
         "symfony/ux-swup": "^2.24",
         "symfony/validator": "7.2.*",
         "symfony/yaml": "7.2.*",
-        "twig/extra-bundle": "^2.12|^3.20",
-        "twig/twig": "^2.12|^3.20"
+        "twig/extra-bundle": "^2.12|^3.21",
+        "twig/twig": "^2.12|^3.21.1"
     },
     "config": {
         "allow-plugins": {
@@ -92,7 +92,7 @@
         "doctrine/doctrine-fixtures-bundle": "^4.1",
         "friendsofphp/php-cs-fixer": "^3.75",
         "roave/security-advisories": "dev-latest",
-        "symfony/maker-bundle": "^1.62.1",
+        "symfony/maker-bundle": "^1.63.0",
         "symfony/stopwatch": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*"
     }

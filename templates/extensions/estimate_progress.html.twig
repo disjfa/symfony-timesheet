@@ -1,4 +1,4 @@
-<div class="progress-stacked" style="height: .5rem;">
+<div class="progress-stacked" style="height: .7rem;" >
     {% for bar in bars %}
         <div class="progress" role="progressbar" aria-label="{{ bar.label }}" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: {{ bar.width }}%">
             <div class="progress-bar {{ bar.class }}"></div>
@@ -6,3 +6,11 @@
     {% endfor %}
 </div>
 
+<div class="d-flex justify-content-between small">
+    <div>
+        {{ spent | as_hours }}
+    </div>
+    <div>
+        {{ estimate | as_hours }}
+    </div>
+</div>

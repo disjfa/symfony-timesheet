@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Organization;
 use App\Form\OrganizationType;
+use App\Manager\TimeSheetManager;
+use App\Query\TimeEntryQuery;
 use App\Repository\OrganizationRepository;
+use App\Repository\TimeEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +18,11 @@ use Symfony\Component\Routing\Attribute\Route;
 final class OrganizationController extends AbstractController
 {
     #[Route(name: 'app_organization_index', methods: ['GET'])]
-    public function index(OrganizationRepository $organizationRepository): Response
+    public function index(OrganizationRepository $organizationRepository, TimeSheetManager $manager): Response
     {
         return $this->render('organization/index.html.twig', [
             'organizations' => $organizationRepository->findAll(),
+            'manager' => $manager,
         ]);
     }
 
@@ -43,10 +47,14 @@ final class OrganizationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_organization_show', methods: ['GET'])]
-    public function show(Organization $organization): Response
+    public function show(Organization $organization, TimeEntryRepository $timeEntryRepository, TimeEntryQuery $timeEntryQuery): Response
     {
+        $timeEntryQuery->setOrganization($organization);
+        $manager = new TimeSheetManager($timeEntryRepository, $timeEntryQuery);
+
         return $this->render('organization/show.html.twig', [
             'organization' => $organization,
+            'manager' => $manager,
         ]);
     }
 

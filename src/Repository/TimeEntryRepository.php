@@ -35,6 +35,18 @@ class TimeEntryRepository extends ServiceEntityRepository
             $qb->setParameter('organization', $organizationId);
         }
 
+        $userId = $timeEntryQuery->getUserId();
+        if ($userId) {
+            $qb->andWhere('time_entry.user = :user');
+            $qb->setParameter('user', $userId);
+        }
+
+        $projectId = $timeEntryQuery->getProjectId();
+        if ($projectId) {
+            $qb->andWhere('time_entry.project = :project');
+            $qb->setParameter('project', $projectId);
+        }
+
         return $qb->getQuery()->getResult();
     }
 }

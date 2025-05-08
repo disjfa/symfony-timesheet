@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\ProjectType;
+use App\Manager\TimeSheetManager;
+use App\Query\TimeEntryQuery;
 use App\Repository\ProjectRepository;
+use App\Repository\TimeEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,10 +46,15 @@ final class ProjectController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_project_show', methods: ['GET'])]
-    public function show(Project $project): Response
+    public function show(Project $project, TimeEntryQuery $timeEntryQuery, TimeEntryRepository $timeEntryRepository): Response
     {
+        $timeEntryQuery->setProject($project);
+
+        $manager = new TimeSheetManager($timeEntryRepository, $timeEntryQuery);
+
         return $this->render('project/show.html.twig', [
             'project' => $project,
+            'manager' => $manager,
         ]);
     }
 

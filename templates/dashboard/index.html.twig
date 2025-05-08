@@ -7,12 +7,22 @@
         <div class="row">
             <div class="col-12">
                 {{ form_start(filterForm) }}
-                <div class="d-flex justify-content-between gap-3">
-                    {{ form_widget(filterForm) }}
+                <div class="d-flex justify-content-between align-items-stretch flex-column flex-lg-row gap-lg-3 align-items-lg-end">
+                    <div class="flex-grow-1">
+                        {{ form_row(filterForm.organization) }}
+                    </div>
+                    <div class="flex-grow-1">
+                    {{ form_row(filterForm.user) }}
+                    </div>
+                    {{ form_rest(filterForm) }}
+
                     <div class="mb-3">
-                        <br>
-                        <button class="btn btn-outline-primary">
+                        <button class="btn btn-outline-primary position-relative" type="submit" accesskey="a">
                             {{ button_label|default('Filter') }}
+                            <span class="badge rounded-pill border border-info opacity-50">
+                                a
+                                <span class="visually-hidden">Access key a</span>
+                            </span>
                         </button>
                     </div>
                 </div>

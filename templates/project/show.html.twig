@@ -10,30 +10,34 @@
 
     <a href="{{ path('app_project_edit', {'id': project.id}) }}">edit</a>
 
-    <div class="accordion" id="projects">
-        {% for task in project.tasks %}
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tasks-{{ task.id }}" aria-expanded="true" aria-controls="tasks-{{ task.id }}">
-                        {{ task.name }}
-                        &nbsp;
-                        <span class="badge text-bg-secondary">{{ task.subtasks.count }}</span>
-                    </button>
-                    {{ estimate_progress(task.totalEstimate, task.totalEntries) | raw }}
-                </h2>
-                <div id="tasks-{{ task.id }}" class="accordion-collapse collapse" data-bs-parent="#projects">
-                    <div class="accordion-body">
-                        <ul class="list-group list-group-flush">
-                            {% for subtask in task.subtasks %}
-                                <li class="list-group-item">
-                                    {{ subtask.name }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Task</th>
+                <th class="text-end">Spent</th>
+                <th>Estimated</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in project.tasks %}
+                <tr class="align-bottom">
+                    <td class="w-auto">{{ task.name }} {{ task.id }}</td>
+                    <td class="text-end">
+                        <small>{{ manager.secondsFor(task) | as_hours }}</small>
+                    </td>
+                    <td class="w-50">{{ estimate_progress(task.totalEstimate, task.totalEntries) | raw }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td><em>No task</em></td>
+                <td class="text-end">
+                    <small>{{ manager.secondsForTask() | as_hours }}</small>
+                </td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     {{ include('project/_delete_form.html.twig') }}

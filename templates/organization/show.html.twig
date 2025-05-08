@@ -5,22 +5,37 @@
 {% block body %}
     <h1>{{ organization.name }}</h1>
 
-    <table class="table table-striped table-hover">
-        <thead></thead>
-        <tbody>
-        {% for project in organization.projects %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-bottom">
+            <thead>
             <tr>
-                <td>
-                    <a href="{{ path('app_project_show', {'id': project.id}) }}">
-                        {{ project.name }}
-                    </a>
-                    {{ estimate_progress(project.totalEstimate, project.totalEntries) | raw }}
-                </td>
+                <th>Project</th>
+                <th class="text-end">Spent</th>
+                <th>Hours</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+            {% for project in organization.projects %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_project_show', {'id': project.id}) }}">
+                            {{ project.name }}
+                        </a>
+                    </td>
+                    <td class="text-end">{{ manager.secondsFor(project) | as_hours }}</td>
+                    <td class="w-50">
+                        {{ estimate_progress(project.totalEstimate, project.totalEntries) | raw }}
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td class="text-end">{{ manager.secondsForProject() | as_hours }}</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <a href="{{ path('app_organization_index') }}">back to list</a>
 
     <a href="{{ path('app_organization_edit', {'id': organization.id}) }}">edit</a>
