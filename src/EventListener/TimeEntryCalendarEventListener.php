@@ -4,37 +4,27 @@ namespace App\EventListener;
 
 use App\Calendar\CalendarEvent;
 use App\Entity\TimeEntry;
-use App\Entity\User;
 use App\Event\GetCalendarEvents;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Query\TimeEntryQuery;
+use App\Repository\TimeEntryRepository;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener]
 class TimeEntryCalendarEventListener
 {
-    private EntityManagerInterface $entityManager;
+    private TimeEntryRepository $timeEntryRepository;
+    private TimeEntryQuery $timeEntryQuery;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(TimeEntryRepository $timeEntryRepository, TimeEntryQuery $timeEntryQuery)
     {
-        $this->entityManager = $entityManager;
+        $this->timeEntryRepository = $timeEntryRepository;
+        $this->timeEntryQuery = $timeEntryQuery;
     }
 
     public function __invoke(GetCalendarEvents $getCalendarEvents): void
     {
-        $userRepository = $this->entityManager->getRepository(User::class);
-        $user = current($userRepository->createQueryBuilder('u')->getQuery()->getResult());
+        $timeEntries = $this->timeEntryRepository->findWithQuery($this->timeEntryQuery);
 
-        $timeEntryRepository = $this->entityManager->getRepository(TimeEntry::class);
-        $timeEntryQuery = $timeEntryRepository->createQueryBuilder('te')
-            ->where('te.start_date >= :start')
-            ->andWhere('te.start_date <= :end')
-            ->andWhere('te.user <= :user')
-            ->setParameter('start', $getCalendarEvents->getStart())
-            ->setParameter('end', $getCalendarEvents->getEnd())
-            ->setParameter('user', $user->getId())
-            ->orderBy('te.start_date', 'ASC');
-
-        $timeEntries = $timeEntryQuery->getQuery()->getResult();
         foreach ($timeEntries as $timeEntry) {
             /* @var TimeEntry $timeEntry */
 
@@ -44,7 +34,7 @@ class TimeEntryCalendarEventListener
                     title: $timeEntry->getProject()->getName(),
                     start: $timeEntry->getStartDate(),
                     end: $timeEntry->getEndDate(),
-                    backgroundColor: $timeEntry->getProject()->getOrganization()->getColor(),
+                    backgroundColor: $timeEntry->getProject()->getColor(),
                 )
             );
         }

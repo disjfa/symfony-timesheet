@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-12">
+        {{ form_start(this.filterForm) }}
+        <div class="d-flex justify-content-between align-items-stretch flex-column flex-lg-row gap-lg-3 align-items-lg-end">
+            <div class="flex-grow-1">
+                {{ form_row(this.filterForm.organization) }}
+            </div>
+            <div class="flex-grow-1">
+                {{ form_row(this.filterForm.user) }}
+            </div>
+            {{ form_rest(this.filterForm) }}
+
+            <div class="mb-3">
+                <button class="btn btn-outline-primary position-relative" type="submit" accesskey="a">
+                    {{ button_label|default('Filter') }}
+                    <span class="badge rounded-pill border border-info opacity-50">
+                        a
+                        <span class="visually-hidden">Access key a</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        {{ form_end(this.filterForm) }}
+    </div>
+</div>

@@ -52,8 +52,12 @@ class TimeEntryFixtures extends Fixture implements DependentFixtureInterface
                             $timeEntry->setStartDate($currentTime);
                             $timeEntry->setSeconds($duration);
                             $timeEntry->setProject($project);
-                            $timeEntry->setTask($task);
-                            $timeEntry->setSubtask($subtask);
+                            if (random_int(0, 100) < 70) {
+                                $timeEntry->setTask($task);
+                                if (random_int(0, 100) < 50) {
+                                    $timeEntry->setSubtask($subtask);
+                                }
+                            }
                             $timeEntry->setUser($user);
                             $manager->persist($timeEntry);
 

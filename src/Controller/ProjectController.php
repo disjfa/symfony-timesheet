@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Charts\TimeEntriesPerDate;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Manager\TimeSheetManager;
 use App\Query\TimeEntryQuery;
 use App\Repository\ProjectRepository;
 use App\Repository\TimeEntryRepository;
+use App\Security\Voter\ProjectVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +30,8 @@ final class ProjectController extends AbstractController
     #[Route('/new', name: 'app_project_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted(ProjectVoter::CREATE, Project::class);
+
         $project = new Project();
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
@@ -46,7 +50,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_project_show', methods: ['GET'])]
-    public function show(Project $project, TimeEntryQuery $timeEntryQuery, TimeEntryRepository $timeEntryRepository): Response
+    public function show(Project $project, TimeEntryQuery $timeEntryQuery, TimeEntryRepository $timeEntryRepository, TimeEntriesPerDate $timeEntriesPerDate): Response
     {
         $timeEntryQuery->setProject($project);
 
@@ -55,6 +59,7 @@ final class ProjectController extends AbstractController
         return $this->render('project/show.html.twig', [
             'project' => $project,
             'manager' => $manager,
+            'timeEntriesPerDate' => $timeEntriesPerDate->getChart($project->getTimeEntries()),
         ]);
     }
 

@@ -12,9 +12,6 @@ class DatesExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('estimate_progress', [DatesExtensionRuntime::class, 'generateEstimateProgress'], [
-                'is_safe' => ['html'],
-            ]),
             new TwigFilter('as_hours', [DatesExtensionRuntime::class, 'asHours']),
         ];
     }
@@ -22,7 +19,6 @@ class DatesExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('estimate_progress', [DatesExtensionRuntime::class, 'generateEstimateProgress']),
             new TwigFunction('as_hours', [DatesExtensionRuntime::class, 'asHours']),
         ];
     }

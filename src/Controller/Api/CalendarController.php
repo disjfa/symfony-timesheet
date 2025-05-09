@@ -17,8 +17,8 @@ final class CalendarController extends AbstractController
     #[Route('/api/calendar', name: 'app_api_calendar')]
     public function index(Request $request, EventDispatcherInterface $eventDispatcher): JsonResponse
     {
-        $start = new \DateTime($request->query->get('start', 'now'));
-        $end = new \DateTime($request->query->get('end', 'now'));
+        $start = new \DateTime($request->query->get('start'));
+        $end = new \DateTime($request->query->get('end'));
 
         $calendarEvent = new GetCalendarEvents($start, $end, []);
         $eventDispatcher->dispatch($calendarEvent);

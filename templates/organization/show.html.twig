@@ -24,7 +24,7 @@
                     </td>
                     <td class="text-end">{{ manager.secondsFor(project) | as_hours }}</td>
                     <td class="w-50">
-                        {{ estimate_progress(project.totalEstimate, project.totalEntries) | raw }}
+                        <twig:estimate_progress :estimate="project.totalEstimate" :spent="project.totalEntries" />
                     </td>
                 </tr>
             {% endfor %}

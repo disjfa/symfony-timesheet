@@ -29,7 +29,7 @@
                     </td>
                     <td class="text-end">{{ project.tasks.count }}</td>
                     <td class="w-50">
-                        {{ estimate_progress(project.totalEstimate, project.totalEntries) | raw }}
+                        <twig:estimate_progress :estimate="project.totalEstimate" :spent="project.totalEntries" />
                     </td>
                     <td class="text-nowrap">
                         <a href="{{ path('app_project_show', {'id': project.id}) }}" class="btn btn-primary btn-sm">Show</a>

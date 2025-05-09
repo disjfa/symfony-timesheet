@@ -3,7 +3,9 @@
 {% block title %}Hello CalendarController!{% endblock %}
 
 {% block body %}
-    <div data-controller="calendar" class="py-3">
+    <twig:filter_form/>
+
+    <div data-controller="calendar" class="py-3" data-calendar-api-value="{{ api_endpoint }}">
         <div data-calendar-target="calendar"></div>
     </div>
 {% endblock %}

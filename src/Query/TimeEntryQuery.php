@@ -24,6 +24,20 @@ class TimeEntryQuery
         $this->startDate->modify('-7 days');
         $this->endDate->modify('-1 second');
 
+        if ($request->query->has('start')) {
+            try {
+                $this->startDate = new \DateTime($request->query->get('start'));
+            } catch (\Exception $e) {
+            }
+        }
+
+        if ($request->query->has('end')) {
+            try {
+                $this->endDate = new \DateTime($request->query->get('end'));
+            } catch (\Exception $e) {
+            }
+        }
+
         $organizationId = filter_var($request->query->get('organization'), FILTER_VALIDATE_INT);
         if ($organizationId) {
             $this->organizationId = $organizationId;

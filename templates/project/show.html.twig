@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>{{ project.name }}</h1>
-    {{ estimate_progress(project.totalEstimate, project.totalEntries) | raw }}
+    <twig:estimate_progress :estimate="project.totalEstimate" :spent="project.totalEntries"></twig:estimate_progress>
 
     <a href="{{ path('app_project_index') }}">back to list</a>
 
@@ -26,7 +26,9 @@
                     <td class="text-end">
                         <small>{{ manager.secondsFor(task) | as_hours }}</small>
                     </td>
-                    <td class="w-50">{{ estimate_progress(task.totalEstimate, task.totalEntries) | raw }}</td>
+                    <td class="w-50">
+                        <twig:estimate_progress :estimate="task.totalEstimate" :spent="task.totalEntries" />
+                    </td>
                 </tr>
             {% endfor %}
             <tr>
@@ -41,4 +43,9 @@
     </div>
 
     {{ include('project/_delete_form.html.twig') }}
+
+    <h3>Projects</h3>
+    <div style="height: 60vh;">
+        {{ render_chart(timeEntriesPerDate) }}
+    </div>
 {% endblock %}
