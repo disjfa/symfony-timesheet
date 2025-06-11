@@ -18,6 +18,7 @@ class FilterFormType extends AbstractType
             'choice_label' => 'name',
             'placeholder' => 'Choose an organization',
             'autocomplete' => true,
+            'multiple' => true,
             'required' => false,
         ]);
         $builder->add('user', EntityType::class, [
@@ -25,6 +26,7 @@ class FilterFormType extends AbstractType
             'choice_label' => 'name',
             'placeholder' => 'Choose a user',
             'autocomplete' => true,
+            'multiple' => true,
             'required' => false,
         ]);
     }

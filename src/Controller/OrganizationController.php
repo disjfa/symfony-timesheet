@@ -8,6 +8,7 @@ use App\Manager\TimeSheetManager;
 use App\Query\TimeEntryQuery;
 use App\Repository\OrganizationRepository;
 use App\Repository\TimeEntryRepository;
+use App\Security\Voter\OrganizationVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,8 @@ final class OrganizationController extends AbstractController
     #[Route('/new', name: 'app_organization_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        //        $this->denyAccessUnlessGranted(OrganizationVoter::CREATE, Organization::class);
+
         $organization = new Organization();
         $form = $this->createForm(OrganizationType::class, $organization);
         $form->handleRequest($request);
@@ -49,7 +52,7 @@ final class OrganizationController extends AbstractController
     #[Route('/{id}', name: 'app_organization_show', methods: ['GET'])]
     public function show(Organization $organization, TimeEntryRepository $timeEntryRepository, TimeEntryQuery $timeEntryQuery): Response
     {
-        $timeEntryQuery->setOrganization($organization);
+        $timeEntryQuery->addOrganization($organization->getId());
         $manager = new TimeSheetManager($timeEntryRepository, $timeEntryQuery);
 
         return $this->render('organization/show.html.twig', [

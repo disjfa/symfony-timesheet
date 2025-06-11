@@ -8,31 +8,35 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "babdev/pagerfanta-bundle": "^4.5",
-        "doctrine/dbal": "^3.9.4",
+        "doctrine/dbal": "^4.2",
         "doctrine/doctrine-bundle": "^2.14",
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
         "doctrine/orm": "^3.3.3",
         "pagerfanta/doctrine-orm-adapter": "^4.7.1",
         "pagerfanta/twig": "^4.7.1",
         "spatie/color": "^1.8",
-        "symfony/asset": "7.2.*",
-        "symfony/asset-mapper": "7.2.*",
-        "symfony/console": "7.2.*",
-        "symfony/dotenv": "7.2.*",
-        "symfony/flex": "^2.5",
-        "symfony/form": "7.2.*",
-        "symfony/framework-bundle": "7.2.*",
-        "symfony/runtime": "7.2.*",
-        "symfony/security-bundle": "7.2.*",
-        "symfony/stimulus-bundle": "^2.24",
-        "symfony/twig-bundle": "7.2.*",
-        "symfony/ux-autocomplete": "^2.24",
-        "symfony/ux-chartjs": "^2.24",
-        "symfony/ux-swup": "^2.24",
-        "symfony/ux-twig-component": "^2.24",
-        "symfony/validator": "7.2.*",
-        "symfony/yaml": "7.2.*",
-        "twig/extra-bundle": "^2.12|^3.21",
+        "symfony/asset": "7.3.*",
+        "symfony/asset-mapper": "7.3.*",
+        "symfony/console": "7.3.*",
+        "symfony/dotenv": "7.3.*",
+        "symfony/flex": "^2.7.1",
+        "symfony/form": "7.3.*",
+        "symfony/framework-bundle": "7.3.*",
+        "symfony/mailer": "7.3.*",
+        "symfony/notifier": "7.3.*",
+        "symfony/runtime": "7.3.*",
+        "symfony/security-bundle": "7.3.*",
+        "symfony/stimulus-bundle": "^2.26.1",
+        "symfony/twig-bundle": "7.3.*",
+        "symfony/ux-autocomplete": "^2.26.1",
+        "symfony/ux-chartjs": "^2.26.1",
+        "symfony/ux-swup": "^2.26.1",
+        "symfony/ux-twig-component": "^2.26.0",
+        "symfony/validator": "7.3.*",
+        "symfony/yaml": "7.3.*",
+        "twig/cssinliner-extra": "^3.21",
+        "twig/extra-bundle": "^3.21",
+        "twig/inky-extra": "^3.21",
         "twig/twig": "^2.12|^3.21.1"
     },
     "config": {
@@ -86,7 +90,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.2.*"
+            "require": "7.3.*"
         }
     },
     "require-dev": {
@@ -94,7 +98,7 @@
         "friendsofphp/php-cs-fixer": "^3.75",
         "roave/security-advisories": "dev-latest",
         "symfony/maker-bundle": "^1.63.0",
-        "symfony/stopwatch": "7.2.*",
-        "symfony/web-profiler-bundle": "7.2.*"
+        "symfony/stopwatch": "7.3.*",
+        "symfony/web-profiler-bundle": "7.3.*"
     }
 }

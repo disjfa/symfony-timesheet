@@ -28,23 +28,23 @@ class TimeEntryRepository extends ServiceEntityRepository
         $qb->setParameter('start_date', $timeEntryQuery->getStartDate());
         $qb->setParameter('end_date', $timeEntryQuery->getEndDate());
 
-        $organizationId = $timeEntryQuery->getOrganizationId();
-        if ($organizationId) {
+        $organizations = $timeEntryQuery->getOrganizations();
+        if ($organizations) {
             $qb->join('time_entry.project', 'project');
-            $qb->andWhere('project.organization = :organization');
-            $qb->setParameter('organization', $organizationId);
+            $qb->andWhere('project.organization IN (:organizations)');
+            $qb->setParameter('organizations', $organizations);
         }
 
-        $userId = $timeEntryQuery->getUserId();
-        if ($userId) {
-            $qb->andWhere('time_entry.user = :user');
-            $qb->setParameter('user', $userId);
+        $users = $timeEntryQuery->getUsers();
+        if ($users) {
+            $qb->andWhere('time_entry.user IN (:users)');
+            $qb->setParameter('users', $users);
         }
 
-        $projectId = $timeEntryQuery->getProjectId();
-        if ($projectId) {
-            $qb->andWhere('time_entry.project = :project');
-            $qb->setParameter('project', $projectId);
+        $projects = $timeEntryQuery->getProjects();
+        if ($projects) {
+            $qb->andWhere('time_entry.project IN (:projects)');
+            $qb->setParameter('projects', $projects);
         }
 
         return $qb->getQuery()->getResult();

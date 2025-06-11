@@ -28,12 +28,14 @@ class ProjectsPastWeek
         $labels = [];
         $data = [];
         $backgroundColors = [];
+        $total = 0;
         foreach ($projects as $item) {
             $color = Named::fromString($item['color']);
 
             $backgroundColors[] = (string) $color->toRgb();
             $labels[] = $item['name'];
             $data[] = $item['seconds'] / 60 / 60;
+            $total += $item['seconds'];
         }
 
         $chart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
@@ -41,7 +43,7 @@ class ProjectsPastWeek
             'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'Hours',
+                    'label' => 'Total '.number_format($total / 60 / 60, 2, ',', '.').' hours',
                     'backgroundColor' => $backgroundColors,
                     'borderColor' => $backgroundColors,
                     'data' => $data,

@@ -2,23 +2,19 @@
 
 namespace App\Query;
 
-use App\Entity\Organization;
-use App\Entity\Project;
-use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 
 class TimeEntryQuery
 {
-    private ?int $organizationId = null;
-    private ?int $projectId = null;
-    private ?int $userId = null;
+    private ?array $organizations = [];
+    private ?array $projects = [];
+    private ?array $users = [];
     private ?\DateTime $startDate = null;
     private ?\DateTime $endDate = null;
 
     public function __construct()
     {
         $request = Request::createFromGlobals();
-
         $this->endDate = new \DateTime('last monday');
         $this->startDate = clone $this->endDate;
         $this->startDate->modify('-7 days');
@@ -38,50 +34,65 @@ class TimeEntryQuery
             }
         }
 
-        $organizationId = filter_var($request->query->get('organization'), FILTER_VALIDATE_INT);
-        if ($organizationId) {
-            $this->organizationId = $organizationId;
+        $organizations = $request->query->all('organization');
+        if (!empty($organizations)) {
+            foreach ($organizations as $organizationId) {
+                $organizationId = filter_var($organizationId, FILTER_VALIDATE_INT);
+                if ($organizationId) {
+                    $this->addOrganization($organizationId);
+                }
+            }
         }
 
-        $userId = filter_var($request->query->get('user'), FILTER_VALIDATE_INT);
-        if ($userId) {
-            $this->userId = $userId;
+        $users = $request->query->all('user');
+        if (!empty($users)) {
+            foreach ($users as $userId) {
+                $userId = filter_var($userId, FILTER_VALIDATE_INT);
+                if ($userId) {
+                    $this->addUser($userId);
+                }
+            }
         }
 
-        $projectId = filter_var($request->query->get('project'), FILTER_VALIDATE_INT);
-        if ($projectId) {
-            $this->projectId = $projectId;
+        $projects = $request->query->all('project');
+        if (!empty($projects)) {
+            foreach ($projects as $projectId) {
+                $projectId = filter_var($projectId, FILTER_VALIDATE_INT);
+                if ($projectId) {
+                    $this->addProject($projectId);
+                }
+            }
         }
     }
 
-    public function setOrganization(Organization $organization)
+    public function addOrganization(int $organizationId): void
     {
-        $this->organizationId = $organization->getId();
+        $this->organizations[] = $organizationId;
     }
 
-    public function getOrganizationId(): ?int
+    public function getOrganizations(): array
     {
-        return $this->organizationId;
+        return $this->organizations;
     }
 
-    public function getProjectId(): ?int
+    public function addProject(int $projectId): void
     {
-        return $this->projectId;
+        $this->projects[] = $projectId;
     }
 
-    public function setProject(Project $project): void
+    public function getProjects(): array
     {
-        $this->projectId = $project->getId();
+        return $this->projects;
     }
 
-    public function getUserId(): ?int
+    public function addUser(int $userId): void
     {
-        return $this->userId;
+        $this->users[] = $userId;
     }
 
-    public function setUser(User $user): void
+    public function getUsers(): array
     {
-        $this->userId = $user->getId();
+        return $this->users;
     }
 
     public function getStartDate(): ?\DateTime

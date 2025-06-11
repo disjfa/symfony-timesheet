@@ -70,7 +70,7 @@ class User implements UserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->name;
+        return (string) $this->email;
     }
 
     /**

@@ -52,7 +52,7 @@ final class ProjectController extends AbstractController
     #[Route('/{id}', name: 'app_project_show', methods: ['GET'])]
     public function show(Project $project, TimeEntryQuery $timeEntryQuery, TimeEntryRepository $timeEntryRepository, TimeEntriesPerDate $timeEntriesPerDate): Response
     {
-        $timeEntryQuery->setProject($project);
+        $timeEntryQuery->addProject($project->getId());
 
         $manager = new TimeSheetManager($timeEntryRepository, $timeEntryQuery);
 
